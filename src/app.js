@@ -1,10 +1,19 @@
 const express = require('express');
-const userRoutes=require("./modules/user/user.routes");
+const cors = require('cors');
+const userRoutes = require("./modules/user/user.routes");
 
 const app = express();
 
+
+app.use(cors());
 app.use(express.json());
 
-app.use("/users", userRoutes);
+
+app.use("/api/v1/users", userRoutes);
+
+
+app.use((req, res) => {
+  res.status(404).json({ message: "Route not found" });
+});
 
 module.exports = app;

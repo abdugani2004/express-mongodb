@@ -3,11 +3,19 @@ const app = require("./app");
 const connectMongo = require("./config/mongo");
 const { createTable } = require("./modules/user/user.model.sql");
 
-(async () => {
-  await connectMongo();
-  await createTable();
+const PORT = process.env.PORT || 5000;
 
-  app.listen(process.env.PORT, () => {
-    console.log(`🚀 Server running on http://localhost:${process.env.PORT}`);
-  });
+(async () => {
+  try {
+    
+    await connectMongo();
+    await createTable();
+
+    app.listen(PORT, () => {
+      console.log(` Server is flying on http://localhost:${PORT}`);
+    });
+  } catch (error) {
+    console.error(" Critical Startup Error:", error);
+    process.exit(1);
+  }
 })();
